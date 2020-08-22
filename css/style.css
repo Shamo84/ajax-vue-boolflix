@@ -1,0 +1,153 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  color: white;
+}
+
+body {
+  padding: 20px;
+  background-color: black;
+  margin-top: 100px;
+  min-width: 1000px;
+}
+
+/* HEADER */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 80px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 100px;
+  border-bottom: 1px solid lightgrey;
+  background-color: black;
+  z-index: 2;
+}
+
+h1 {
+  font-style: italic;
+  flex-grow: 2;
+  font-size: 40px;
+}
+
+#input {
+  border-radius: 8px;
+  width: 300px;
+  height: 30px;
+  text-align: center;
+  margin: 0 20px;
+  font-size: 24px;
+  color: black;
+}
+
+#input::placeholder {
+  font-size: 24px;
+}
+
+#search {
+  color: black;
+  width: 70px;
+  height: 30px;
+  font-size: 20px;
+  border-radius: 8px;
+}
+/* MAIN */
+main {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 30px;
+}
+
+select,
+option {
+  color: black;
+  min-width: 150px;
+  height: 32px;
+  font-size: 20px;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+ul {
+  list-style: none;
+}
+div.show {
+  min-height: 340px;
+  margin: 10px 5px;
+  width: calc(25% - 10px);
+  position: relative;
+}
+
+div.show:hover .informazioni {
+  display: block;
+  overflow-y: auto;
+}
+
+span {
+  color: yellowgreen;
+  text-align: justify;
+}
+
+h2.movie-title,
+h2.tvseries-title {
+  background-color: yellowgreen;
+  text-align: center;
+}
+h2, h3 {
+  margin: 10px 0;
+  font-size: 28px;
+}
+
+.show .poster {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  border: 1px solid #555555;
+  border-radius: 8px;
+}
+
+.show .poster img{
+  max-height: 100%;
+  width: 100%;
+  text-align: center;
+  font-size: 24px;
+  border-radius: 8px;
+}
+
+.show ul.informazioni {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 5px;
+}
+
+.show ul.informazioni li{
+  font-size: 1.4vw;
+}
+
+.container .stars {
+  white-space: nowrap;
+  color: gold;
+  font-size: 1.9vw;
+}
+
+.container img.flag {
+  height: 1.4vw;
+  vertical-align: middle;
+  border: 1px solid darkgrey;
+}
+
+.hidden {
+  display: none;
+}
