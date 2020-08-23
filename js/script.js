@@ -4,17 +4,68 @@ var app = new Vue(
     el: '#app',
     data: {
       input: "",
-      title: "",
-      name: "",
-      originalTitle: "",
-      originalName: "",
-      releaseYear: "",
-      stars: "",
-      plot: "",
-      genre: "",
-      language: "",
+      searchDone: false,
+      movies: [],
+      series: []
     },
     methods: {
+      search() {
+        this.movies = [];
+        this.series = [];
+        this.searchDone = false;
+        this.sendRequestToServer("movie");
+        this.sendRequestToServer("tv");
+        this.input = "";
+      },
+      sendRequestToServer(string) {
+        var This = this;
+        axios.get("https://api.themoviedb.org/3/search/" + string, {
+          params: {
+            api_key: "b1d8c49e5a444b10f55f930d8f4ed091",
+            query: this.input,
+            language: "it-IT"
+          }
+        })
+        .then(function(response) {
+          console.log(response.data.results);
+          This.searchDone = true;
+          for (var i = 0; i < response.data.results.length; i++) {
+            var newShow = {
+              title: response.data.results[i].title,
+              originalTitle: response.data.results[i].original_title,
+              originalName: response.data.results[i].original_name,
+              releaseYear: response.data.results[i].release_date,
+              poster: response.data.results[i].poster_path,
+              stars: This.printStars(response.data.results[i].vote_average),
+              plot: response.data.results[i].overview,
+              language: response.data.results[i].original_language
+            };
+            if (string == "movie") {
+              This.movies.push(newShow);
+            } else {
+              This.series.push(newShow);
+            }
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        })
+      },
+      printStars(vote) {
+        var starsNumber = Math.ceil(vote / 2);
+        var stars = "";
+        if (vote == 0) {
+          stars = "unavailable"
+        } else {
+          for (var i = 1; i <= starsNumber; i++) {
+            stars += '&#9733;'
+          }
+          for (var i = 5; i > starsNumber; i--) {
+            stars += '&#9734;'
+          }
+        }
+        return stars;
+      }
     },
     mounted() {
 

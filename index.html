@@ -6,7 +6,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.2/handlebars.js" integrity="sha256-N5vR06TQIR+YD8oS0yndB1pu/EITeijW52dwezEq7/g=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js" integrity="sha256-MAgcygDRahs+F/Nk5Vz387whB4kSK9NXlDN3w58LLq0=" crossorigin="anonymous"></script>
-        <script src="https://momentjs.com/downloads/moment.min.js" charset="utf-8"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg==" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <link rel="stylesheet" href="css/style.css">
@@ -16,23 +16,55 @@
         <!-- HEADER -->
         <header>
           <h1>BoolFlix</h1>
-          <input id="input" type="text" name="input" placeholder="Inserisci un titolo" v-model="input">
-          <button id="search" type="button" name="button">Cerca</button>
+          <input id="input" type="text" name="input" placeholder="Inserisci un titolo" v-model="input" v-on:keyup.enter="search">
+          <button id="search" type="button" name="button" @click="search">Cerca</button>
         </header>
         <!-- MAIN -->
         <main>
-          <h3 id="cercato" class="hidden">hai cercato: "<span></span>"</h3>
+          <h3 id="cercato" v-if="searchDone">hai cercato: "<span></span>"</h3>
           <!-- SEZIONE MOVIE -->
           <div>
-            <h2 class="movie-title hidden">Movies</h2>
-            <select class="hidden" id="movie-select" name="select"></select>
-            <div class="movie container"></div>
+            <h2 class="movie-title" v-if="searchDone">Movies</h2>
+            <select  v-if="searchDone" id="movie-select" name="select"></select>
+            <div class="movie container">
+              <div v-for="movie in movies" class="show">
+                <div class="poster" >
+                  <img :src="'https://image.tmdb.org/t/p/w342' + movie.poster" :alt="movie.originalTitle">
+                </div>
+                <ul class="informazioni hidden">
+                  <li>Titolo: <span>{{movie.title}}</span></li>
+                  <li>Titolo Originale: <span>{{movie.originalTitle}}</span></li>
+                  <li>Anno di uscita: <span>{{movie.releaseYear}}</span></li>
+                  <li>Lingua Originale: <img class="flag" :src="'img/' + movie.language + '.png'" :alt="movie.language"></li>
+                  <li>Voto Medio: <span class="stars" v-html="movie.stars"></span></li>
+                  <li>Generi: <span class="generi"></span></li>
+                  <li>Main Cast: <span class="cast"></span></li>
+                  <li>Trama: <span>{{movie.plot}}</span></li>
+                </ul>
+              </div>
+            </div>
           </div>
           <!-- SEZIONE SERIE TV -->
           <div>
-            <h2 class="tvseries-title hidden">TV Series</h2>
-            <select class="hidden" id="tv-select" name="select"></select>
-            <div class="tvseries container"></div>
+            <h2 v-if="searchDone" class="tvseries-title">TV Series</h2>
+            <select v-if="searchDone" id="tv-select" name="select"></select>
+            <div class="tvseries container">
+              <div v-for="serie in series" class="show" id="">
+                <div class="poster" >
+                  <img :src="'https://image.tmdb.org/t/p/w342' + serie.poster" :alt="serie.originalName">
+                </div>
+                <ul class="informazioni hidden">
+                  <li>Titolo: <span>{{serie.name}}</span></li>
+                  <li>Titolo Originale: <span>{{serie.originalName}}</span></li>
+                  <li>Anno di uscita: <span>{{serie.releaseYear}}</span></li>
+                  <li>Lingua Originale: <img class="flag" :src="'img/' + serie.language + '.png'" :alt="serie.language"></li>
+                  <li>Voto Medio: <span class="stars">{{serie.stars}}</span></li>
+                  <li>Generi: <span class="generi"></span></li>
+                  <li>Main Cast: <span class="cast"></span></li>
+                  <li>Trama: <span>{{serie.plot}}</span></li>
+                </ul>
+              </div>
+            </div>
           </div>
         </main>
       </div>
