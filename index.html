@@ -29,17 +29,18 @@
             <div class="movie container">
               <div v-for="movie in movies" class="show">
                 <div class="poster" >
-                  <img :src="'https://image.tmdb.org/t/p/w342' + movie.poster" :alt="movie.originalTitle">
+                  <img :src="(movie.poster != 'non disponibile') ? 'https://image.tmdb.org/t/p/w342' + movie.poster : 'img/no-cover.png'" :alt="movie.originalTitle">
+                  <h2 v-if="movie.poster == 'non disponibile'">{{movie.title}}</h2>
                 </div>
                 <ul class="informazioni hidden">
                   <li>Titolo: <span>{{movie.title}}</span></li>
                   <li>Titolo Originale: <span>{{movie.originalTitle}}</span></li>
                   <li>Anno di uscita: <span>{{movie.releaseYear}}</span></li>
                   <li>Lingua Originale: <img class="flag" :src="'img/' + movie.language + '.png'" :alt="movie.language"></li>
-                  <li>Voto Medio: <span class="stars" v-html="movie.stars"></span></li>
+                  <li v-if="movie.stars">Voto Medio: <span class="stars" v-html="movie.stars"></span></li>
                   <li>Generi: <span class="generi"></span></li>
-                  <li>Main Cast: <span class="cast"></span></li>
-                  <li>Trama: <span>{{movie.plot}}</span></li>
+                  <li v-if="movie.cast">Main Cast: <span class="cast">{{movie.cast}}</span></li>
+                  <li v-if="movie.plot">Trama: <span>{{movie.plot}}</span></li>
                 </ul>
               </div>
             </div>
@@ -51,17 +52,18 @@
             <div class="tvseries container">
               <div v-for="serie in series" class="show" id="">
                 <div class="poster" >
-                  <img :src="'https://image.tmdb.org/t/p/w342' + serie.poster" :alt="serie.originalName">
+                  <img :src="(serie.poster != 'non disponibile') ? 'https://image.tmdb.org/t/p/w342' + serie.poster : 'img/no-cover.png'" :alt="serie.originalName">
+                  <h2 v-if="serie.poster == 'non disponibile'">{{serie.originalName}}</h2>
                 </div>
                 <ul class="informazioni hidden">
                   <li>Titolo: <span>{{serie.name}}</span></li>
                   <li>Titolo Originale: <span>{{serie.originalName}}</span></li>
                   <li>Anno di uscita: <span>{{serie.releaseYear}}</span></li>
                   <li>Lingua Originale: <img class="flag" :src="'img/' + serie.language + '.png'" :alt="serie.language"></li>
-                  <li>Voto Medio: <span class="stars">{{serie.stars}}</span></li>
+                  <li v-if="serie.stars">Voto Medio: <span class="stars" v-html="serie.stars"></span></li>
                   <li>Generi: <span class="generi"></span></li>
-                  <li>Main Cast: <span class="cast"></span></li>
-                  <li>Trama: <span>{{serie.plot}}</span></li>
+                  <li v-if="serie.cast">Main Cast: <span class="cast">{{serie.cast}}</span></li>
+                  <li v-if="serie.plot">Trama: <span>{{serie.plot}}</span></li>
                 </ul>
               </div>
             </div>
