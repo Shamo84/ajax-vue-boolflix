@@ -4,15 +4,19 @@ var app = new Vue(
     el: '#app',
     data: {
       input: "",
-      searchDone: false,
+      titleSearched: null,
       movies: [],
-      series: []
+      series: [],
+      moviesGenres: ["All"],
+      seriesGenres: ["All"],
     },
     methods: {
       search() {
         this.movies = [];
         this.series = [];
-        this.searchDone = false;
+        this.moviesGenres = ["All"];
+        this.seriesGenres = ["All"];
+        this.titleSearched = this.input;
         this.sendRequestToServer("movie");
         this.sendRequestToServer("tv");
         this.input = "";
@@ -28,9 +32,9 @@ var app = new Vue(
         })
         .then(function(response) {
           console.log(response.data.results);
-          This.searchDone = true;
           for (var i = 0; i < response.data.results.length; i++) {
             var newShow = {
+              visible: true,
               title: response.data.results[i].title,
               originalTitle: response.data.results[i].original_title,
               originalName: response.data.results[i].original_name,
@@ -66,12 +70,36 @@ var app = new Vue(
               }
             }
             newShow.cast = mainCast.slice(0, mainCast.length-2);
-            This.sortShowsbyPopularity(string, newShow);
+            This.getGenre(string, newShow)
           }
         })
       },
-      getGenre() {
-
+      getGenre(string, newShow) {
+        var This = this;
+        var generi = "";
+        axios.get("https://api.themoviedb.org/3/"+ string + "/" + newShow.id, {
+          params: {
+            api_key: "b1d8c49e5a444b10f55f930d8f4ed091",
+          }
+        })
+        .then(function(response) {
+          if (response.data.genres != "") {
+            for (var key in response.data.genres) {
+              generi += response.data.genres[key].name + ", ";
+              if (string == "movie") {
+                if (!This.moviesGenres.includes(response.data.genres[key].name)) {
+                  This.moviesGenres.push(response.data.genres[key].name);
+                }
+              } else {
+                if (!This.seriesGenres.includes(response.data.genres[key].name)) {
+                  This.seriesGenres.push(response.data.genres[key].name);
+                }
+              }
+            }
+            newShow.genres = generi.slice(0, generi.length-2);
+          }
+          This.sortShowsbyPopularity(string, newShow);
+        })
       },
       sortShowsbyPopularity(string, newShow) {
         var i = 0;
@@ -112,12 +140,29 @@ var app = new Vue(
           }
         }
         return stars;
+      },
+      moviesGenreFilter(event) {
+        for (var i = 0; i < this.movies.length; i++) {
+          if ((this.movies[i].genres && this.movies[i].genres.includes(event.target.value)) || event.target.value == "All") {
+            this.movies[i].visible = true;
+          } else {
+            this.movies[i].visible = false;
+          }
+        }
+      },
+      seriesGenreFilter(event) {
+        for (var i = 0; i < this.series.length; i++) {
+          if ((this.series[i].genres && this.series[i].genres.includes(event.target.value)) || event.target.value == "All") {
+            this.series[i].visible = true;
+          } else {
+            this.series[i].visible = false;
+          }
+        }
       }
     },
     mounted() {
 
     }
-
   })
 
 

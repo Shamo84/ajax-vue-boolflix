@@ -3,7 +3,6 @@
     <head>
         <meta charset="utf-8">
         <title>BoolFlix</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.2/handlebars.js" integrity="sha256-N5vR06TQIR+YD8oS0yndB1pu/EITeijW52dwezEq7/g=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/js/all.min.js" integrity="sha256-MAgcygDRahs+F/Nk5Vz387whB4kSK9NXlDN3w58LLq0=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg==" crossorigin="anonymous"></script>
@@ -16,54 +15,54 @@
         <!-- HEADER -->
         <header>
           <h1>BoolFlix</h1>
-          <input id="input" type="text" name="input" placeholder="Inserisci un titolo" v-model="input" v-on:keyup.enter="search">
+          <input id="input" type="text" name="input" placeholder="Inserisci un titolo" v-model="input" v-on:keyup.enter="search()">
           <button id="search" type="button" name="button" @click="search">Cerca</button>
         </header>
         <!-- MAIN -->
         <main>
-          <h3 id="cercato" v-if="searchDone">hai cercato: "<span></span>"</h3>
+          <h3 id="cercato" v-if="titleSearched">hai cercato: "<span>{{titleSearched}}</span>"</h3>
           <!-- SEZIONE MOVIE -->
           <div>
-            <h2 class="movie-title" v-if="searchDone">Movies</h2>
-            <select  v-if="searchDone" id="movie-select" name="select"></select>
+            <h2 class="movie-title" v-if="titleSearched">Movies</h2>
+            <select  v-if="titleSearched" id="movie-select" name="select" @change="moviesGenreFilter($event)"><option v-for="genre in moviesGenres">{{genre}}</option></select>
             <div class="movie container">
-              <div v-for="movie in movies" class="show">
+              <div v-for="movie in movies" class="show" v-if="movie.visible">
                 <div class="poster" >
-                  <img :src="(movie.poster != 'non disponibile') ? 'https://image.tmdb.org/t/p/w342' + movie.poster : 'img/no-cover.png'" :alt="movie.originalTitle">
-                  <h2 v-if="movie.poster == 'non disponibile'">{{movie.title}}</h2>
+                  <img :src="(movie.poster) ? 'https://image.tmdb.org/t/p/w342' + movie.poster : 'img/no-cover.png'" :alt="movie.originalTitle">
+                  <h2 v-if="!movie.poster">{{movie.title}}</h2>
                 </div>
                 <ul class="informazioni hidden">
                   <li>Titolo: <span>{{movie.title}}</span></li>
                   <li>Titolo Originale: <span>{{movie.originalTitle}}</span></li>
                   <li>Anno di uscita: <span>{{movie.releaseYear}}</span></li>
                   <li>Lingua Originale: <img class="flag" :src="'img/' + movie.language + '.png'" :alt="movie.language"></li>
-                  <li v-if="movie.stars">Voto Medio: <span class="stars" v-html="movie.stars"></span></li>
-                  <li>Generi: <span class="generi"></span></li>
-                  <li v-if="movie.cast">Main Cast: <span class="cast">{{movie.cast}}</span></li>
-                  <li v-if="movie.plot">Trama: <span>{{movie.plot}}</span></li>
+                  <li>Voto Medio: <span class="stars" v-html="movie.stars"></span></li>
+                  <li>Generi: <span class="generi">{{movie.genres}}</span></li>
+                  <li>Main Cast: <span class="cast">{{movie.cast}}</span></li>
+                  <li>Trama: <span>{{movie.plot}}</span></li>
                 </ul>
               </div>
             </div>
           </div>
           <!-- SEZIONE SERIE TV -->
           <div>
-            <h2 v-if="searchDone" class="tvseries-title">TV Series</h2>
-            <select v-if="searchDone" id="tv-select" name="select"></select>
+            <h2 v-if="titleSearched" class="tvseries-title">TV Series</h2>
+            <select  v-if="titleSearched" id="tv-select" name="select" @change="seriesGenreFilter($event)"><option v-for="genre in seriesGenres">{{genre}}</option></select>
             <div class="tvseries container">
               <div v-for="serie in series" class="show" id="">
                 <div class="poster" >
-                  <img :src="(serie.poster != 'non disponibile') ? 'https://image.tmdb.org/t/p/w342' + serie.poster : 'img/no-cover.png'" :alt="serie.originalName">
-                  <h2 v-if="serie.poster == 'non disponibile'">{{serie.originalName}}</h2>
+                  <img :src="(serie.poster) ? 'https://image.tmdb.org/t/p/w342' + serie.poster : 'img/no-cover.png'" :alt="serie.originalName">
+                  <h2 v-if="!serie.poster">{{serie.originalName}}</h2>
                 </div>
                 <ul class="informazioni hidden">
                   <li>Titolo: <span>{{serie.name}}</span></li>
                   <li>Titolo Originale: <span>{{serie.originalName}}</span></li>
                   <li>Anno di uscita: <span>{{serie.releaseYear}}</span></li>
                   <li>Lingua Originale: <img class="flag" :src="'img/' + serie.language + '.png'" :alt="serie.language"></li>
-                  <li v-if="serie.stars">Voto Medio: <span class="stars" v-html="serie.stars"></span></li>
-                  <li>Generi: <span class="generi"></span></li>
-                  <li v-if="serie.cast">Main Cast: <span class="cast">{{serie.cast}}</span></li>
-                  <li v-if="serie.plot">Trama: <span>{{serie.plot}}</span></li>
+                  <li>Voto Medio: <span class="stars" v-html="serie.stars"></span></li>
+                  <li>Generi: <span class="generi">{{serie.genres}}</span></li>
+                  <li>Main Cast: <span class="cast">{{serie.cast}}</span></li>
+                  <li>Trama: <span>{{serie.plot}}</span></li>
                 </ul>
               </div>
             </div>
