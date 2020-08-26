@@ -14,13 +14,13 @@
       <div id="app">
         <!-- HEADER -->
         <header>
-          <h1>BoolFlix</h1>
+          <h1 @click="reset(), input='', titleSearched=null">BoolFlix</h1>
           <input id="input" type="text" name="input" placeholder="Inserisci un titolo" v-model="input" v-on:keyup.enter="search()">
           <button id="search" type="button" name="button" @click="search">Cerca</button>
         </header>
         <!-- MAIN -->
         <main>
-          <h3 id="cercato" v-if="titleSearched">hai cercato: "<span>{{titleSearched}}</span>"</h3>
+          <h3 id="cercato" v-if="titleSearched">hai cercato: '<span>{{titleSearched}}</span>'</h3>
           <!-- SEZIONE MOVIE -->
           <div>
             <h2 class="movie-title" v-if="titleSearched">Movies</h2>
