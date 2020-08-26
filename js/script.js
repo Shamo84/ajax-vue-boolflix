@@ -7,15 +7,13 @@ var app = new Vue(
       titleSearched: null,
       movies: [],
       series: [],
-      moviesGenres: ["All"],
-      seriesGenres: ["All"],
+      genres: ["All"],
     },
     methods: {
       reset() {
         this.movies = [];
         this.series = [];
-        this.moviesGenres = ["All"];
-        this.seriesGenres = ["All"];
+        this.genres = ["All"];
         this.titleSearched = this.input;
       },
       search() {
@@ -92,14 +90,8 @@ var app = new Vue(
           if (response.data.genres != "") {
             for (var key in response.data.genres) {
               generi += response.data.genres[key].name + ", ";
-              if (string == "movie") {
-                if (!This.moviesGenres.includes(response.data.genres[key].name)) {
-                  This.moviesGenres.push(response.data.genres[key].name);
-                }
-              } else {
-                if (!This.seriesGenres.includes(response.data.genres[key].name)) {
-                  This.seriesGenres.push(response.data.genres[key].name);
-                }
+              if (!This.genres.includes(response.data.genres[key].name)) {
+                This.genres.push(response.data.genres[key].name);
               }
             }
             newShow.genres = generi.slice(0, generi.length-2);
@@ -147,7 +139,7 @@ var app = new Vue(
         }
         return stars;
       },
-      moviesGenreFilter(event) {
+      GenreFilter(event) {
         for (var i = 0; i < this.movies.length; i++) {
           if ((this.movies[i].genres && this.movies[i].genres.includes(event.target.value)) || event.target.value == "All") {
             this.movies[i].visible = true;
@@ -155,8 +147,6 @@ var app = new Vue(
             this.movies[i].visible = false;
           }
         }
-      },
-      seriesGenreFilter(event) {
         for (var i = 0; i < this.series.length; i++) {
           if ((this.series[i].genres && this.series[i].genres.includes(event.target.value)) || event.target.value == "All") {
             this.series[i].visible = true;
@@ -164,7 +154,7 @@ var app = new Vue(
             this.series[i].visible = false;
           }
         }
-      }
+      },
     },
     mounted() {
 
