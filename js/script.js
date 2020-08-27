@@ -3,6 +3,7 @@ var app = new Vue(
   {
     el: '#app',
     data: {
+      upcomingMovies: [],
       input: "",
       titleSearched: null,
       movies: [],
@@ -15,6 +16,25 @@ var app = new Vue(
         this.series = [];
         this.genres = ["All"];
         this.titleSearched = this.input;
+      },
+      getUpcoming() {
+        var This = this;
+        axios.get("https://api.themoviedb.org/3/movie/upcoming", {
+          params: {
+            api_key: "b1d8c49e5a444b10f55f930d8f4ed091",
+          }
+        })
+        .then(function(response) {
+          console.log(response.data.results);
+          for (var i = 0; i < 10; i++) {
+            if (response.data.results[i]) {
+
+            }
+          }
+        })
+        .catch(function(error) {
+          console.log(error);
+        })
       },
       search() {
         this.reset();
@@ -157,6 +177,6 @@ var app = new Vue(
       },
     },
     mounted() {
-
+      this.getUpcoming();
     }
   })
