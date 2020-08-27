@@ -8,6 +8,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg==" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
@@ -20,6 +22,9 @@
         </header>
         <!-- MAIN -->
         <main>
+          <div class="" v-if="titleSearched == null">
+
+          </div>
           <h3 id="cercato" v-if="titleSearched">hai cercato: '<span>{{titleSearched}}</span>'</h3>
           <!-- SEZIONE MOVIE -->
           <select  v-if="titleSearched" id="show-select" name="select" @change="GenreFilter($event)"><option v-for="genre in genres">{{genre}}</option></select>
