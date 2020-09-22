@@ -3,7 +3,7 @@ var app = new Vue(
   {
     el: '#app',
     data: {
-      upcomingMovies: [],
+      upcomingMovies: [null, null, null, null, null, null],
       input: "",
       titleSearched: null,
       movies: [],
@@ -28,7 +28,18 @@ var app = new Vue(
           console.log(response.data.results);
           for (var i = 0; i < 10; i++) {
             if (response.data.results[i]) {
-
+              var newShow = {
+                title: response.data.results[i].title,
+                originalTitle : response.data.results[i].original_title,
+                overview: response.data.results[i].overview,
+                releaseDate: moment(response.data.results[i].release_date, "YYYY-MM-DD").format("DD-MM-YYYY"),
+                stars: This.printStars(response.data.results[i].vote_average),
+                language: response.data.results[i].original_language,
+                poster: response.data.results[i].poster_path,
+                backdrop: response.data.results[i].backdrop_path,
+                id: response.data.results[i].id,
+              }
+              This.upcomingMovies.push(newShow);
             }
           }
         })
@@ -48,11 +59,10 @@ var app = new Vue(
           params: {
             api_key: "b1d8c49e5a444b10f55f930d8f4ed091",
             query: this.input,
-            language: "it-IT"
+            language: "it-IT",
           }
         })
         .then(function(response) {
-          console.log(response.data.results);
           for (var i = 0; i < response.data.results.length; i++) {
             var newShow = {
               visible: true,
@@ -62,7 +72,7 @@ var app = new Vue(
               releaseYear: moment(response.data.results[i].release_date, "YYYY-MM-DD").format("DD-MM-YYYY"),
               poster: response.data.results[i].poster_path,
               stars: This.printStars(response.data.results[i].vote_average),
-              plot: response.data.results[i].overview,
+              overview: response.data.results[i].overview,
               language: response.data.results[i].original_language,
               popularity: response.data.results[i].popularity,
               id: response.data.results[i].id,
@@ -71,7 +81,6 @@ var app = new Vue(
               newShow.releaseYear = "";
             }
             This.getCast(string, newShow);
-            // This.getGenre(string, newShow.id);
           }
         })
         .catch(function(error) {

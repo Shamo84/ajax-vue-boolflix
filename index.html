@@ -8,8 +8,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg==" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
@@ -22,26 +20,6 @@
         </header>
         <!-- MAIN -->
         <main>
-          <!-- Swiper -->
-          <div class="swiper-container" v-if="titleSearched == null">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide">Slide 1</div>
-              <div class="swiper-slide">Slide 2</div>
-              <div class="swiper-slide">Slide 3</div>
-              <div class="swiper-slide">Slide 4</div>
-              <div class="swiper-slide">Slide 5</div>
-              <div class="swiper-slide">Slide 6</div>
-              <div class="swiper-slide">Slide 7</div>
-              <div class="swiper-slide">Slide 8</div>
-              <div class="swiper-slide">Slide 9</div>
-              <div class="swiper-slide">Slide 10</div>
-            </div>
-            <!-- Add Pagination -->
-            <div class="swiper-pagination"></div>
-            <!-- Add Arrows -->
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-          </div>
           <h3 id="cercato" v-if="titleSearched">hai cercato: '<span>{{titleSearched}}</span>'</h3>
           <!-- SEZIONE MOVIE -->
           <select  v-if="titleSearched" id="show-select" name="select" @change="GenreFilter($event)"><option v-for="genre in genres">{{genre}}</option></select>
@@ -61,7 +39,7 @@
                   <li>Voto Medio: <span class="stars" v-html="movie.stars"></span></li>
                   <li>Generi: <span class="generi">{{movie.genres}}</span></li>
                   <li>Main Cast: <span class="cast">{{movie.cast}}</span></li>
-                  <li>Trama: <span>{{movie.plot}}</span></li>
+                  <li>Trama: <span>{{movie.overview}}</span></li>
                 </ul>
               </div>
             </div>
@@ -83,7 +61,7 @@
                   <li>Voto Medio: <span class="stars" v-html="serie.stars"></span></li>
                   <li>Generi: <span class="generi">{{serie.genres}}</span></li>
                   <li>Main Cast: <span class="cast">{{serie.cast}}</span></li>
-                  <li>Trama: <span>{{serie.plot}}</span></li>
+                  <li>Trama: <span>{{serie.overview}}</span></li>
                 </ul>
               </div>
             </div>
@@ -91,24 +69,8 @@
         </main>
       </div>
         <script src="js/script.js" charset="utf-8"></script>
-        <!-- Initialize Swiper -->
         <script>
-          var swiper = new Swiper('.swiper-container', {
-            spaceBetween: 30,
-            centeredSlides: true,
-            autoplay: {
-              delay: 2500,
-              disableOnInteraction: false,
-            },
-            pagination: {
-              el: '.swiper-pagination',
-              clickable: true,
-            },
-            navigation: {
-              nextEl: '.swiper-button-next',
-              prevEl: '.swiper-button-prev',
-            },
-          });
+
         </script>
     </body>
 </html>
