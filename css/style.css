@@ -6,9 +6,11 @@
 }
 body {
   padding: 20px;
-  background-color: black;
   margin-top: 100px;
   min-width: 1000px;
+  background-image: url(../img/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 /* HEADER */
@@ -22,8 +24,10 @@ header {
   align-items: center;
   padding: 0 100px;
   border-bottom: 1px solid lightgrey;
-  background-color: black;
   z-index: 2;
+  background-image: url(../img/background.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 h1 {
@@ -63,7 +67,7 @@ main {
   margin: 0 auto;
 }
 
-.container {
+.container-results {
   display: flex;
   flex-wrap: wrap;
   font-size: 30px;
@@ -79,7 +83,7 @@ main {
   top: 0;
   height: 100%;
   width: 100%;
-  padding: 20px;
+  padding: 0 20px 30px;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -124,14 +128,17 @@ div.show:hover .informazioni {
 }
 
 span {
-  color: yellowgreen;
+  color: #27dbff;
   text-align: justify;
 }
 
 h2.movie-title,
 h2.tvseries-title {
-  background-color: yellowgreen;
   text-align: center;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  background: rgb(2,0,36);
+  background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(97,97,171,1) 38%, rgba(39,219,255,1) 100%);
 }
 h2, h3 {
   margin: 10px 0;
@@ -142,7 +149,7 @@ h2, h3 {
   height: 100%;
   display: flex;
   align-items: center;
-  border: 1px solid #555555;
+  border: 1px solid black;
   border-radius: 8px;
   text-align: center;
 }
@@ -175,13 +182,13 @@ h2, h3 {
   font-size: 1.4vw;
 }
 
-.container .stars {
+.container-results .stars {
   white-space: nowrap;
   color: gold;
   font-size: 1.4vw;
 }
 
-.container img.flag {
+.container-results img.flag {
   height: 1.4vw;
   vertical-align: middle;
   border: 1px solid darkgrey;

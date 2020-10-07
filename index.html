@@ -103,7 +103,7 @@
           <select  v-if="titleSearched" id="show-select" name="select" @change="GenreFilter($event)"><option v-for="genre in genres">{{genre}}</option></select>
           <div>
             <h2 class="movie-title" v-if="titleSearched">Movies</h2>
-            <div class="movie container">
+            <div class="movie container-results">
               <div v-for="movie in movies" class="show" v-if="movie.visible">
                 <div class="poster" >
                   <img :src="(movie.poster) ? 'https://image.tmdb.org/t/p/w342' + movie.poster : 'img/no-cover.png'" :alt="movie.originalTitle">
@@ -125,7 +125,7 @@
           <!-- SEZIONE SERIE TV -->
           <div>
             <h2 v-if="titleSearched" class="tvseries-title">TV Series</h2>
-            <div class="tvseries container">
+            <div class="tvseries container-results">
               <div v-for="serie in series" class="show" id="" v-if="serie.visible">
                 <div class="poster" >
                   <img :src="(serie.poster) ? 'https://image.tmdb.org/t/p/w342' + serie.poster : 'img/no-cover.png'" :alt="serie.originalName">
