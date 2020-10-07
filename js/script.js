@@ -3,7 +3,14 @@ var app = new Vue(
   {
     el: '#app',
     data: {
-      upcomingMovies: [null, null, null, null, null, null],
+      upcomingMovies: [
+        {backdrop: ""},
+        {backdrop: ""},
+        {backdrop: ""},
+        {backdrop: ""},
+        {backdrop: ""},
+        {backdrop: ""},
+      ],
       input: "",
       titleSearched: null,
       movies: [],
@@ -25,8 +32,8 @@ var app = new Vue(
           }
         })
         .then(function(response) {
-          console.log(response.data.results);
-          for (var i = 0; i < 10; i++) {
+          This.upcomingMovies = [];
+          for (var i = 0; i < 6; i++) {
             if (response.data.results[i]) {
               var newShow = {
                 title: response.data.results[i].title,

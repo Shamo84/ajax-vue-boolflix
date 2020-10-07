@@ -69,6 +69,36 @@ main {
   font-size: 30px;
 }
 
+.carousel-item {
+  position: relative;
+}
+
+.carousel-overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.carousel-overlay > * {
+  text-shadow: 2px 1px 1px black;
+}
+
+.carousel-overlay h2 {
+  font-size: 50px;
+}
+
+.carousel .stars {
+  color: gold;
+  font-size: 35px;
+  margin-top: 0;
+}
+
 select,
 option {
   color: black;
