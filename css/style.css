@@ -135,7 +135,7 @@ span {
 h2.movie-title,
 h2.tvseries-title {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 21px;
   border-radius: 8px;
   background: rgb(2,0,36);
   background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(97,97,171,1) 38%, rgba(39,219,255,1) 100%);
