@@ -34,6 +34,7 @@ h1 {
   font-style: italic;
   flex-grow: 2;
   font-size: 40px;
+  text-shadow: 2px 2px 4px #27dbff;
 }
 h1:hover {
   cursor: pointer;
